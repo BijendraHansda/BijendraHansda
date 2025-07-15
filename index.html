@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Script Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input, button { padding: 10px; margin: 5px; }
+        #output { margin-top: 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h2>हिंदी से रोमन कनवर्टर</h2>
+    <input type="text" id="inputText" placeholder="हिंदी टेक्स्ट डालें (जैसे: नमस्ते)">
+    <button onclick="convertText()">कनवर्ट करें</button>
+    <p id="output">कनवर्टेड टेक्स्ट यहां दिखेगा</p>
+
+    <script>
+    // हिंदी से रोमन के लिए बेसिक मैपिंग
+    const hindiToRoman = {
+        'अ': 'a', 'आ': 'aa', 'इ': 'i', 'ई': 'ee', 'उ': 'u', 'ऊ': 'oo',
+        'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au',
+        'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh',
+        'च': 'ch', 'छ': 'chh', 'ज': 'j', 'झ': 'jh',
+        'ट': 't', 'ठ': 'th', 'ड': 'd', 'ढ': 'dh',
+        'न': 'n', 'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh',
+        'म': 'm', 'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'v',
+        'श': 'sh', 'ष': 'sh', 'स': 's', 'ह': 'h',
+        'ं': 'n', 'ा': 'a', 'ि': 'i', 'ी': 'ee', 'ु': 'u',
+        'ू': 'oo', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au'
+    };
+
+    function convertText() {
+        let input = document.getElementById('inputText').value;
+        let output = '';
+        for (let char of input) {
+            output += hindiToRoman[char] || char;
+        }
+        document.getElementById('output').innerText = output;
+    }
+    </script>
+</body>
+</html>
