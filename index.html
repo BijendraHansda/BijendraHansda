@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Script Converter</title>
+    <title>Roman to Devanagari Converter</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
         input, button { padding: 10px; margin: 5px; }
@@ -9,32 +9,50 @@
     </style>
 </head>
 <body>
-    <h2>हिंदी से रोमन कनवर्टर</h2>
-    <input type="text" id="inputText" placeholder="हिंदी टेक्स्ट डालें (जैसे: नमस्ते)">
+    <h2>रोमन से देवनागरी कनवर्टर</h2>
+    <input type="text" id="inputText" placeholder="रोमन टेक्स्ट डालें (जैसे: namaste)">
     <button onclick="convertText()">कनवर्ट करें</button>
     <p id="output">कनवर्टेड टेक्स्ट यहां दिखेगा</p>
 
     <script>
-    // हिंदी से रोमन के लिए बेसिक मैपिंग
-    const hindiToRoman = {
-        'अ': 'a', 'आ': 'aa', 'इ': 'i', 'ई': 'ee', 'उ': 'u', 'ऊ': 'oo',
-        'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au',
-        'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh',
-        'च': 'ch', 'छ': 'chh', 'ज': 'j', 'झ': 'jh',
-        'ट': 't', 'ठ': 'th', 'ड': 'd', 'ढ': 'dh',
-        'न': 'n', 'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh',
-        'म': 'm', 'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'v',
-        'श': 'sh', 'ष': 'sh', 'स': 's', 'ह': 'h',
-        'ं': 'n', 'ा': 'a', 'ि': 'i', 'ी': 'ee', 'ु': 'u',
-        'ू': 'oo', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au'
+    // रोमन से देवनागरी के लिए बेसिक मैपिंग
+    const romanToDevanagari = {
+        'a': 'अ', 'aa': 'आ', 'i': 'इ', 'ee': 'ई', 'u': 'उ', 'oo': 'ऊ',
+        'e': 'ए', 'ai': 'ऐ', 'o': 'ओ', 'au': 'औ',
+        'k': 'क', 'kh': 'ख', 'g': 'ग', 'gh': 'घ',
+        'ch': 'च', 'chh': 'छ', 'j': 'ज', 'jh': 'झ',
+        't': 'ट', 'th': 'ठ', 'd': 'ड', 'dh': 'ढ',
+        'n': 'न', 'p': 'प', 'ph': 'फ', 'b': 'ब', 'bh': 'भ',
+        'm': 'म', 'y': 'य', 'r': 'र', 'l': 'ल', 'v': 'व',
+        'sh': 'श', 's': 'स', 'h': 'ह'
+        // नोट: वर्णमाला संयोजन (जैसे 'ं', 'ा') को बाद में हैंडल करेंगे
     };
 
     function convertText() {
-        let input = document.getElementById('inputText').value;
+        let input = document.getElementById('inputText').value.toLowerCase();
         let output = '';
-        for (let char of input) {
-            output += hindiToRoman[char] || char;
+        let i = 0;
+
+        while (i < input.length) {
+            // दो अक्षरों वाली मैपिंग (जैसे 'aa', 'ee', 'ch') को पहले चेक करें
+            if (i + 1 < input.length) {
+                let twoChar = input.slice(i, i + 2);
+                if (romanToDevanagari[twoChar]) {
+                    output += romanToDevanagari[twoChar];
+                    i += 2;
+                    continue;
+                }
+            }
+            // एक अक्षर वाली मैपिंग
+            let oneChar = input[i];
+            if (romanToDevanagari[oneChar]) {
+                output += romanToDevanagari[oneChar];
+            } else {
+                output += oneChar; // अगर मैपिंग नहीं है, तो वही अक्षर रखें
+            }
+            i++;
         }
+
         document.getElementById('output').innerText = output;
     }
     </script>
